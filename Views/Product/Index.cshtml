@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ProductsShowcase.Models.ProductModel>
+
+<p>
+    <a class="btn btn-primary" href="/Product/InputForm">Create New</a>
+</p>
+
+@*Container takes care of dynamic width, and d-flex flex-wrap turns this into a flexbox container that it automatically shuffles around different cards on each line*@
+<div class="container d-flex flex-wrap">
+    @foreach (var item in Model)
+        {
+            var s = item.Name;
+            var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
+        
+        <div class="card" style="width: 18rem;">
+            @*150 is the pixel size, and remember u after ? is a variable. In this case it's unique Id.*@
+            @*<img class="card-img-top" src="https://i.pravatar.cc/150?u=@item.Id" alt="Card image cap">*@
+            @*Alt tab is what's a description for visually impaired*@
+            <img class="card-img-top" src="https://loremflickr.com/g/150/150/@firstWord?lock=@item.Id" alt="@item.Name">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@Html.DisplayFor(m => item.Price)</p>
+                <p class="card-text">@item.Description</p>
+                <a href="/Product/ShowDetails/@item.Id" class="btn btn-primary">Show details</a>
+                <a href="/Product/Edit/@item.Id" class="btn btn-warning">Edit</a>
+                <a href="/Product/Delete/@item.Id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+
+</div>
