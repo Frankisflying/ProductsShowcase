@@ -18,21 +18,6 @@ namespace ProductsShowcase.Controllers
             return View(products.GetAllProducts());
         }
 
-        public IActionResult SearchResults(string searchTerm) 
-        {
-            ProductsDAO products = new ProductsDAO();
-            
-            List<ProductModel> productList = products.SearchProducts(searchTerm);
-            
-            return View("index", productList);
-        }
-
-        public IActionResult ShowDetails(int id) 
-        {
-            ProductsDAO products = new ProductsDAO();
-            ProductModel foundProduct = products.GetProductById(id);
-            return View(foundProduct);
-        }
 
         public IActionResult Edit(int id)
         {
@@ -41,12 +26,6 @@ namespace ProductsShowcase.Controllers
             return View("ShowEdit", foundProduct);
         }
 
-        public IActionResult ProcessEdit(ProductModel product)
-        {
-            ProductsDAO products = new ProductsDAO();
-            products.Update(product);
-            return View("Index", products.GetAllProducts());
-        }
 
         public IActionResult Delete(int Id)
         {
@@ -57,22 +36,11 @@ namespace ProductsShowcase.Controllers
         }
 
 
-        public IActionResult SearchForm() 
-        {
-            return View();
-        }
-
         public IActionResult InputForm()
         {
             return View();
         }
 
-        public IActionResult ProcessCreate(ProductModel product)
-        {
-            ProductsDAO products = new ProductsDAO();
-            products.Insert(product);
-            return View("Index", products.GetAllProducts());
-        }
 
         // Routing from a controller to an action of the controller
         // IActionResult 
@@ -83,6 +51,47 @@ namespace ProductsShowcase.Controllers
             // It will be expecting a View called Message
             return View();
         }
+
+
+        public IActionResult ProcessCreate(ProductModel product)
+        {
+            ProductsDAO products = new ProductsDAO();
+            products.Insert(product);
+            return View("Index", products.GetAllProducts());
+        }
+
+
+        public IActionResult ProcessEdit(ProductModel product)
+        {
+            ProductsDAO products = new ProductsDAO();
+            products.Update(product);
+            return View("Index", products.GetAllProducts());
+        }
+
+
+        public IActionResult SearchForm()
+        {
+            return View();
+        }
+
+
+        public IActionResult SearchResults(string searchTerm) 
+        {
+            ProductsDAO products = new ProductsDAO();
+            
+            List<ProductModel> productList = products.SearchProducts(searchTerm);
+            
+            return View("index", productList);
+        }
+
+
+        public IActionResult ShowDetails(int id) 
+        {
+            ProductsDAO products = new ProductsDAO();
+            ProductModel foundProduct = products.GetProductById(id);
+            return View(foundProduct);
+        }
+
 
         // Passing param on URL use the format of {action/controller name}?{variableName}={value}&{variableName}={value}
         public IActionResult Welcome(string name, int secretNumber = 13)

@@ -7,24 +7,43 @@
 @*Container takes care of dynamic width, and d-flex flex-wrap turns this into a flexbox container that it automatically shuffles around different cards on each line*@
 <div class="container d-flex flex-wrap">
     @foreach (var item in Model)
-        {
-            var s = item.Name;
-            var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
-        
-        <div class="card" style="width: 18rem;">
-            @*150 is the pixel size, and remember u after ? is a variable. In this case it's unique Id.*@
-            @*<img class="card-img-top" src="https://i.pravatar.cc/150?u=@item.Id" alt="Card image cap">*@
-            @*Alt tab is what's a description for visually impaired*@
-            <img class="card-img-top" src="https://loremflickr.com/g/150/150/@firstWord?lock=@item.Id" alt="@item.Name">
-            <div class="card-body">
-                <h5 class="card-title">@item.Name</h5>
-                <p class="card-text">@Html.DisplayFor(m => item.Price)</p>
-                <p class="card-text">@item.Description</p>
-                <a href="/Product/ShowDetails/@item.Id" class="btn btn-primary">Show details</a>
-                <a href="/Product/Edit/@item.Id" class="btn btn-warning">Edit</a>
-                <a href="/Product/Delete/@item.Id" class="btn btn-danger">Delete</a>
-            </div>
+    {
+        <div id="card-number-@item.Id">
+            <partial name="_productCard" model="item" />
         </div>
     }
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="Name" class="control-label"></label>
+                    <input id="modal-input-name" for="Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="Price" class="control-label"></label>
+                    <input id="modal-input-price" for="Price" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="Description" class="control-label"></label>
+                    <input id="modal-input-description" for="Description" class="form-control" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*data-dismiss is to close the modal box when the button is clicked*@
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="save-button" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>

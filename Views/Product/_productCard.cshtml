@@ -1,0 +1,23 @@
+﻿@model ProductsShowcase.Models.ProductModel
+@{ 
+    var s = Model.Name;
+    var firstWord = s.IndexOf(" ") > -1 ? s.Substring(0, s.IndexOf(" ")) : s;
+}
+
+<div class="card" style="width: 18rem;">
+    @*150 is the pixel size, and remember u after ? is a variable. In this case it's unique Id.*@
+    @*<img class="card-img-top" src="https://i.pravatar.cc/150?u=@Model.Id" alt="Card image cap">*@
+    @*Alt tab is what's a description for visually impaired*@
+    <img class="card-img-top" src="https://loremflickr.com/g/150/150/@firstWord?lock=@Model.Id" alt="@Model.Name">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">@Html.DisplayFor(m => Model.Price)</p>
+        <p class="card-text">@Model.Description</p>
+        <a href="/Product/ShowDetails/@Model.Id" class="btn btn-primary">Show details</a>
+        <a href="/Product/Edit/@Model.Id" class="btn btn-warning">Edit</a>
+        <a href="/Product/Delete/@Model.Id" class="btn btn-danger">Delete</a>
+        <button id="@Model.Id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+            Modal Edit
+        </button>
+    </div>
+</div>
