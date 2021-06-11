@@ -71,6 +71,13 @@ namespace ProductsShowcase.Controllers
         }
 
 
+        public IActionResult ProcessEditReturnPartial(ProductModel product)
+        {
+            productsDAO.Update(product);
+            return PartialView("_productCard", product);
+        }
+
+
         public IActionResult SearchForm()
         {
             return View();
