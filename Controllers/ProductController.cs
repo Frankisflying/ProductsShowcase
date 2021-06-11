@@ -11,7 +11,13 @@ namespace ProductsShowcase.Controllers
 {
     public class ProductController : Controller
     {
-        ProductsDAO productsDAO = new ProductsDAO();
+        ProductsDAO productsDAO;
+        public ProductController() 
+        {
+            productsDAO = new ProductsDAO();
+        }
+
+
         public IActionResult Index()
         {
             //HardCodedSampleDataRepository hardCodedSampleDataRepository = new HardCodedSampleDataRepository();
@@ -81,8 +87,13 @@ namespace ProductsShowcase.Controllers
 
         public IActionResult ShowDetails(int id) 
         {
-            ProductModel foundProduct = productsDAO.GetProductById(id);
-            return View(foundProduct);
+            return View(productsDAO.GetProductById(id));
+        }
+
+
+        public IActionResult ShowDetailsJSON(int id)
+        {
+            return Json(productsDAO.GetProductById(id));
         }
 
 
