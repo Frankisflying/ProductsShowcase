@@ -17,6 +17,10 @@ label {
     margin-bottom: 20px;
 }
 
+.btn-with-margin-top {
+    margin-top: 20px;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;

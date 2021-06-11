@@ -11,28 +11,26 @@ namespace ProductsShowcase.Controllers
 {
     public class ProductController : Controller
     {
+        ProductsDAO productsDAO = new ProductsDAO();
         public IActionResult Index()
         {
             //HardCodedSampleDataRepository hardCodedSampleDataRepository = new HardCodedSampleDataRepository();
-            ProductsDAO products = new ProductsDAO();
-            return View(products.GetAllProducts());
+            return View(productsDAO.GetAllProducts());
         }
 
 
         public IActionResult Edit(int id)
         {
-            ProductsDAO products = new ProductsDAO();
-            ProductModel foundProduct = products.GetProductById(id);
+            ProductModel foundProduct = productsDAO.GetProductById(id);
             return View("ShowEdit", foundProduct);
         }
 
 
         public IActionResult Delete(int Id)
         {
-            ProductsDAO products = new ProductsDAO();
-            ProductModel product = products.GetProductById(Id);
-            products.Delete(product);
-            return View("Index", products.GetAllProducts());
+            ProductModel product = productsDAO.GetProductById(Id);
+            productsDAO.Delete(product);
+            return View("Index", productsDAO.GetAllProducts());
         }
 
 
@@ -55,17 +53,15 @@ namespace ProductsShowcase.Controllers
 
         public IActionResult ProcessCreate(ProductModel product)
         {
-            ProductsDAO products = new ProductsDAO();
-            products.Insert(product);
-            return View("Index", products.GetAllProducts());
+            productsDAO.Insert(product);
+            return View("Index", productsDAO.GetAllProducts());
         }
 
 
         public IActionResult ProcessEdit(ProductModel product)
         {
-            ProductsDAO products = new ProductsDAO();
-            products.Update(product);
-            return View("Index", products.GetAllProducts());
+            productsDAO.Update(product);
+            return View("Index", productsDAO.GetAllProducts());
         }
 
 
@@ -76,10 +72,8 @@ namespace ProductsShowcase.Controllers
 
 
         public IActionResult SearchResults(string searchTerm) 
-        {
-            ProductsDAO products = new ProductsDAO();
-            
-            List<ProductModel> productList = products.SearchProducts(searchTerm);
+        {            
+            List<ProductModel> productList = productsDAO.SearchProducts(searchTerm);
             
             return View("index", productList);
         }
@@ -87,8 +81,7 @@ namespace ProductsShowcase.Controllers
 
         public IActionResult ShowDetails(int id) 
         {
-            ProductsDAO products = new ProductsDAO();
-            ProductModel foundProduct = products.GetProductById(id);
+            ProductModel foundProduct = productsDAO.GetProductById(id);
             return View(foundProduct);
         }
 
